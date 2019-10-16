@@ -1,0 +1,64 @@
+#Server Cofiguration
+server:
+  port: 9090
+  #Context path configuration
+  servlet:
+    context-path: /SBFormApp
+#MVC view Resolver Configuration  
+spring:
+  mvc:
+    view:
+      prefix: /views/
+      suffix: .jsp
+#Profile related Config
+  profiles:
+    active: qa        
+#Config for connected Admin server    
+  boot:
+    admin:
+      client:
+        url: http://localhost:7070
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"        
+#custom messages for registration related in default profile
+form-app: 
+  messages: 
+    succMsg: User Registration SucessFully
+    failMsg: User Registration Failed Please Fill Correct Info 
+---
+spring:
+  profiles: qa
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: scott
+    password: tiger
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
+        format_sql: true
+        
+form-app: 
+  messages: 
+    succMsg: User Registration SucessFully-QA
+    failMsg: User Registration Failed Please Fill Correct Info-QA 
+    updateMsg: User Update SuccessFully...!!
+    
+---
+spring:
+  profiles: prod
+form-app: 
+  messages: 
+    succMsg: User Registration SucessFully-PROD
+    failMsg: User Registration Failed Please Fill Correct Info-PROD 
+  
+      
+    
